@@ -13,6 +13,11 @@ const userSchema = Joi.object({
   password: Joi.string().max(20).min(6).required()
 });
 
+const loginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().max(20).min(6).required()
+});
+
 
 const handleAll = (req, res) => {
   return res.status(405).json({ status: 'error', message: 'method not allowed' });
@@ -20,13 +25,13 @@ const handleAll = (req, res) => {
 
 
 router.route('/')
-  .get(valid.body(userSchema), userLogin);
+  .get(userLogin);
 
 router.route('/login')
-  .post(userLogin).all(handleAll);
+  .post(valid.body(loginSchema), userLogin).all(handleAll);
 
 router.route('/signup')
-  .post(userSignUp).all(handleAll);
+  .post(valid.body(userSchema), userSignUp).all(handleAll);
 
 
 export default router;
