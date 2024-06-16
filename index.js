@@ -1,5 +1,6 @@
 import express from 'express';
 import userRoutes from './routes/userRoutes.js';
+import productRoutes from './routes/productRoutes.js';
 import mongoose from 'mongoose';
 const port = 5000;
 const app = express();
@@ -30,5 +31,6 @@ app.get('/', (req, res) => {
 
 
 app.use('/api/users', userRoutes);
+app.use('/api/products', userRoutes);
 
 
