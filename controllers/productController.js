@@ -1,6 +1,11 @@
 import Product from "../models/Product.js";
 
 
+export const getTopProducts = async (req, res, next) => {
+  req.query = { rating: { $gt: 4.5 }, limit: 5 };
+  next();
+}
+
 
 
 export const getProducts = async (req, res) => {
@@ -10,7 +15,13 @@ export const getProducts = async (req, res) => {
     const queryObject = { ...req.query };
 
     objFields.forEach((ele) => delete queryObject[ele]);
-    console.log(queryObject);
+
+    if (req.query.search) {
+      queryObject.product_name = { $regex: req.query.search, $options: 'i' }
+    }
+
+
+
     let query = Product.find(queryObject);
 
 
@@ -20,7 +31,6 @@ export const getProducts = async (req, res) => {
     }
 
     if (req.query.fields) {
-
       const fields = req.query.fields.split(',').join(' ');
       query = query.select(fields);
     }
