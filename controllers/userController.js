@@ -12,7 +12,10 @@ export const userLogin = async (req, res) => {
       const passMatch = bcrypt.compareSync(password, isExist.password);
       if (!passMatch) return res.status(401).json({ status: 'error', message: 'invalid credential' });
 
-      const token = jwt.sign({ userId: isExist._id, isAdmin: isExist.isAdmin }, 'toky');
+      const token = jwt.sign({ userId: isExist._id, isAdmin: isExist.isAdmin }, 'toky',);
+
+
+
 
       return res.status(200).json({
         token,
@@ -44,9 +47,11 @@ export const userSignUp = async (req, res) => {
 
   try {
     const isExist = await User.findOne({ email: email });
-    const hashPass = bcrypt.hashSync(password, 10);
 
     if (isExist) return res.status(400).json({ status: 'error', message: 'user already exist' });
+
+    const hashPass = bcrypt.hashSync(password, 10);
+
     await User.create({
       username,
       email,

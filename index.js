@@ -7,7 +7,6 @@ import cors from 'cors';
 const port = 5000;
 const app = express();
 
-app.use(cors());
 
 mongoose.connect('mongodb+srv://babynshrestha76:moles900@cluster0.guo1zjx.mongodb.net/Shopy').then((val) => {
 
@@ -16,16 +15,18 @@ mongoose.connect('mongodb+srv://babynshrestha76:moles900@cluster0.guo1zjx.mongod
   })
 });
 
-
+app.use(cors());
 app.use(express.json());
 app.use(express.static('uploads'));
 
 
 
-app.get('/', (req, res) => {
-  res.cookie('', '', {
 
-  })
+
+
+app.get('/', (req, res) => {
+
+
   return res.status(200).json({
     status: 'success',
     data: 'welcome to the backs jee'

@@ -9,6 +9,9 @@ export const getTopProducts = async (req, res, next) => {
 
 
 export const getProducts = async (req, res) => {
+
+
+
   const objFields = ['sort', 'search', 'fields', 'page', 'limit'];
   try {
 
