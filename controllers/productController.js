@@ -1,10 +1,12 @@
 import Product from "../models/Product.js";
-
+import mongoose from "mongoose";
 
 export const getTopProducts = async (req, res, next) => {
   req.query = { rating: { $gt: 4.5 }, limit: 5 };
   next();
 }
+
+
 
 
 
@@ -53,6 +55,24 @@ export const getProducts = async (req, res) => {
       data: products
     });
 
+  } catch (err) {
+    return res.status(400).json({ status: 'error', message: `${err}` });
+  }
+}
+
+
+
+export const getProductById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    if (mongoose.isValidObjectId(id)) {
+      const product = await Product.findById(id);
+      return res.status(200).json({ status: 'success', data: product });
+    }
+    return res.status(400).json({
+      status: 'error',
+      message: 'please provide valid id'
+    });
   } catch (err) {
     return res.status(400).json({ status: 'error', message: `${err}` });
   }
