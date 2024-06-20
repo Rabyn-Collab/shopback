@@ -13,11 +13,11 @@ const handleAll = (req, res) => {
 
 router.route('/')
   .get(getProducts).all(handleAll);
-router.route('/:id')
-  .get(getProductById).all(handleAll);
+
 router.route('/top_products')
   .get(getTopProducts, getProducts).all(handleAll);
-
+router.route('/:id')
+  .get(getProductById).all(handleAll);
 
 
 export default router;
