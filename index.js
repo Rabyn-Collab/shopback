@@ -7,6 +7,10 @@ import fileUpload from 'express-fileupload';
 const port = 5000;
 const app = express();
 
+const m = 90;
+
+
+
 
 mongoose.connect('mongodb+srv://babynshrestha76:moles900@cluster0.guo1zjx.mongodb.net/Shopy').then((val) => {
 

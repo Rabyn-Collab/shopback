@@ -1,5 +1,6 @@
 import express from "express";
 import { addProduct, getProductById, getProducts, getTopProducts } from "../controllers/productController.js";
+import { fileCheck } from "../middleware/fileCheck.js";
 
 
 const router = express.Router();
@@ -12,7 +13,7 @@ const handleAll = (req, res) => {
 
 
 router.route('/')
-  .get(getProducts).post(addProduct).all(handleAll);
+  .get(getProducts).post(fileCheck, addProduct).all(handleAll);
 
 router.route('/top_products')
   .get(getTopProducts, getProducts).all(handleAll);
