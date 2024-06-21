@@ -77,3 +77,19 @@ export const getProductById = async (req, res) => {
     return res.status(400).json({ status: 'error', message: `${err}` });
   }
 }
+
+
+
+export const addProduct = async (req, res) => {
+
+  try {
+    console.log(req.files);
+
+    return res.status(200).json({
+
+      message: 'success'
+    });
+  } catch (err) {
+    return res.status(400).json({ status: 'error', message: `${err}` });
+  }
+}
