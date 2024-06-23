@@ -4,7 +4,7 @@ import path from 'path';
 const supports = ['.png', '.jpg', '.jpeg'];
 
 export const fileCheck = (req, res, next) => {
-  const file = req.files.image;
+  const file = req.files?.image;
   try {
     if (file) {
       const val = path.extname(file.name);
@@ -15,6 +15,10 @@ export const fileCheck = (req, res, next) => {
       file.mv(`./uploads/${file.name}`, (err) => {
         console.log(err);
       });
+
+      req.imagePath = `/uploads/${file.name}`;
+
+
 
       next();
     } else {

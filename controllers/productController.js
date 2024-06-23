@@ -1,6 +1,6 @@
 import Product from "../models/Product.js";
 import mongoose from "mongoose";
-
+import fs from 'fs';
 export const getTopProducts = async (req, res, next) => {
   req.query = { rating: { $gt: 4.5 }, limit: 5 };
   next();
@@ -82,12 +82,31 @@ export const getProductById = async (req, res) => {
 
 export const addProduct = async (req, res) => {
 
-  try {
+  const {
+    product_name,
+    product_detail,
+    product_price,
+    countInStock,
+    category,
+    brand
+  } = req.body;
 
+  try {
+    await Product.create({
+      product_name,
+      product_image: req.imagePath,
+      product_detail,
+      product_price,
+      countInStock,
+      category,
+      brand
+    });
     return res.status(200).json({
-      message: 'success'
+      status: 'success',
+      message: 'product added'
     });
   } catch (err) {
+    fs.unlink(`.${req.imagePath}`, (err) => console.log(err));
     return res.status(400).json({ status: 'error', message: `${err}` });
   }
 }
