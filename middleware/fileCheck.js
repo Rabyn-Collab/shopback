@@ -4,7 +4,7 @@ import fs from 'fs';
 const supports = ['.png', '.jpg', '.jpeg'];
 
 export const fileCheck = (req, res, next) => {
-  const file = req.files?.image;
+  const file = req.files?.product_image;
   try {
     if (file) {
       const val = path.extname(file.name);
