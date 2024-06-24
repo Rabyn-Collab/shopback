@@ -110,3 +110,68 @@ export const addProduct = async (req, res) => {
     return res.status(400).json({ status: 'error', message: `${err}` });
   }
 }
+
+
+
+
+export const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  const imagePath = req.imagePath;
+  const {
+    product_name,
+    product_detail,
+    product_price,
+    countInStock,
+    category,
+    brand
+  } = req.body;
+
+  try {
+    if (imagePath) {
+      await Product.findByIdAndUpdate(id, {
+        product_name,
+        product_image: req.imagePath,
+        product_detail,
+        product_price,
+        countInStock,
+        category,
+        brand
+      });
+    } else {
+      await Product.findByIdAndUpdate(id, {
+        product_name,
+        product_detail,
+        product_price,
+        countInStock,
+        category,
+        brand
+      });
+    }
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'product updated'
+    });
+  } catch (err) {
+    fs.unlink(`.${req.imagePath}`, (err) => console.log(err));
+    return res.status(400).json({ status: 'error', message: `${err}` });
+  }
+}
+
+
+
+
+export const removeProduct = async (req, res) => {
+  const { id } = req.params;
+  const { imagePath } = req.query;
+  try {
+    await Product.findByIdAndDelete(id);
+    fs.unlink(`.${imagePath}`, (err) => console.log(err));
+    return res.status(200).json({
+      status: 'success',
+      message: 'product removed'
+    });
+  } catch (err) {
+    return res.status(400).json({ status: 'error', message: `${err}` });
+  }
+}

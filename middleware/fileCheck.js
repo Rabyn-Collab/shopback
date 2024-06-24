@@ -1,5 +1,5 @@
 import path from 'path';
-
+import fs from 'fs';
 
 const supports = ['.png', '.jpg', '.jpeg'];
 
@@ -18,14 +18,48 @@ export const fileCheck = (req, res, next) => {
 
       req.imagePath = `/uploads/${file.name}`;
 
-
-
       next();
     } else {
       return res.status(400).json({
         status: 'error',
         message: 'please provide vaild image'
       });
+    }
+
+
+
+  } catch (err) {
+    return res.status(400).json({
+      status: 'error',
+      message: `${err}`
+    });
+  }
+}
+
+
+
+
+
+export const updateFile = (req, res, next) => {
+  const file = req.files?.image;
+  const oldImagePath = req.body.imagePath;
+  try {
+    if (file) {
+      const val = path.extname(file.name);
+      if (!supports.includes(val)) return res.status(400).json({
+        status: 'error',
+        message: 'please provide vaild image'
+      });
+      fs.unlink(`.${oldImagePath}`, callback);
+      file.mv(`./uploads/${file.name}`, (err) => {
+        console.log(err);
+      });
+
+      req.imagePath = `/uploads/${file.name}`;
+
+      next();
+    } else {
+      next();
     }
 
 
