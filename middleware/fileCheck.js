@@ -50,7 +50,9 @@ export const updateFile = (req, res, next) => {
         status: 'error',
         message: 'please provide vaild image'
       });
-      fs.unlink(`.${oldImagePath}`, callback);
+      fs.unlink(`.${oldImagePath}`, (err) => {
+
+      });
       file.mv(`./uploads/${file.name}`, (err) => {
         console.log(err);
       });
