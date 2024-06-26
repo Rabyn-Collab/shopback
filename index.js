@@ -12,8 +12,6 @@ const app = express();
 
 
 
-
-
 mongoose.connect('mongodb+srv://babynshrestha76:moles900@cluster0.guo1zjx.mongodb.net/Shopy').then((val) => {
 
   app.listen(port, () => {

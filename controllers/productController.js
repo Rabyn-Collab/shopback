@@ -44,7 +44,7 @@ export const getProducts = async (req, res) => {
     const page = req.query.page || 1;
     const limit = req.query.limit || 10;
     const skip = (page - 1) * 10;
-    query = query.skip(skip).limit(limit);
+    query = query.select('-createdAt -updatedAt -__v').skip(skip).limit(limit);
 
     const products = await query;
 
