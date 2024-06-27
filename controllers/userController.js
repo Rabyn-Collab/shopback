@@ -64,3 +64,28 @@ export const userSignUp = async (req, res) => {
 
 
 }
+
+
+export const userUpdate = async (req, res) => {
+  const { email, username } = req.body;
+  const { id } = req.params;
+  try {
+    const isExist = await User.findOne({ email: email });
+
+    if (isExist) {
+      await User.findByIdAndUpdate(id, {
+        username: req.body?.username || isExist.username,
+        email: req.body?.email || isExist.email,
+      });
+      return res.status(201).json({ status: 'success', message: 'successfully registered' });
+    } else {
+      return res.status(400).json({ status: 'error', message: 'user doesn\'t exist' });
+    }
+
+
+  } catch (err) {
+    return res.status(400).json(`${err}`);
+  }
+
+
+}

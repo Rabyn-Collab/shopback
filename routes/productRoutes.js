@@ -2,15 +2,12 @@ import express from "express";
 import { addProduct, getProductById, getProducts, getTopProducts, removeProduct, updateProduct } from "../controllers/productController.js";
 import { fileCheck, updateFile } from "../middleware/fileCheck.js";
 import { adminCheck, userCheck } from "../middleware/checkUser.js";
+import { handleAll } from "../utils/commons.js";
 
 
 const router = express.Router();
 
 
-
-const handleAll = (req, res) => {
-  return res.status(405).json({ status: 'error', message: 'method not allowed' });
-}
 
 
 router.route('/')

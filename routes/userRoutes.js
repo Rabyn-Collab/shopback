@@ -2,6 +2,7 @@ import express from "express";
 import { userLogin, userSignUp } from "../controllers/userController.js";
 import Joi from 'joi';
 import validator from 'express-joi-validation';
+import { handleAll } from "../utils/commons.js";
 
 const router = express.Router();
 
@@ -19,10 +20,6 @@ const loginSchema = Joi.object({
 });
 
 
-const handleAll = (req, res) => {
-  return res.status(405).json({ status: 'error', message: 'method not allowed' });
-}
-
 
 router.route('/')
   .get(userLogin);
@@ -32,6 +29,9 @@ router.route('/login')
 
 router.route('/signup')
   .post(valid.body(userSchema), userSignUp).all(handleAll);
+
+router.route('/profile/:id')
+  .patch().all(handleAll);
 
 
 export default router;
