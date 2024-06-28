@@ -1,5 +1,5 @@
 import express from "express";
-import { userLogin, userSignUp } from "../controllers/userController.js";
+import { userLogin, userSignUp, userUpdate } from "../controllers/userController.js";
 import Joi from 'joi';
 import validator from 'express-joi-validation';
 import { handleAll } from "../utils/commons.js";
@@ -31,7 +31,7 @@ router.route('/signup')
   .post(valid.body(userSchema), userSignUp).all(handleAll);
 
 router.route('/profile/:id')
-  .patch().all(handleAll);
+  .patch(userUpdate).all(handleAll);
 
 
 export default router;
