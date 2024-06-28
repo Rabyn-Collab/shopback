@@ -67,12 +67,15 @@ export const userSignUp = async (req, res) => {
 
 
 export const userUpdate = async (req, res) => {
-  const { email, username } = req.body;
   const { id } = req.params;
-  try {
-    const isExist = await User.findOne({ email: email });
 
+
+
+  try {
+    const isExist = await User.findOne({ _id: id });
+    console.log(isExist);
     if (isExist) {
+
       await User.findByIdAndUpdate(id, {
         username: req.body?.username || isExist.username,
         email: req.body?.email || isExist.email,
