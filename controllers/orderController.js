@@ -24,7 +24,10 @@ export const getOrderById = async (req, res) => {
   const { id } = req.params;
   try {
     if (mongoose.isValidObjectId(id)) {
-      const order = await Order.findById(id);
+      const order = await Order.findById(id).populate({
+        path: 'user',
+        strictPopulate: false
+      }).exec();
       return res.status(200).json({
         status: 'success',
         data: order
@@ -44,6 +47,26 @@ export const getOrderById = async (req, res) => {
 
 }
 
+
+
+export const getOrderByUser = async (req, res) => {
+
+  try {
+
+    const orders = await Order.find({ user: req.userId });
+    return res.status(200).json({
+      status: 'success',
+      data: orders
+    });
+
+
+
+  } catch (err) {
+    return res.status(400).json(`${err}`);
+  }
+
+
+}
 export const addOrder = async (req, res) => {
   const { totalAmount, products } = req.body;
   try {
