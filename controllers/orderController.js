@@ -24,10 +24,7 @@ export const getOrderById = async (req, res) => {
   const { id } = req.params;
   try {
     if (mongoose.isValidObjectId(id)) {
-      const order = await Order.findById(id).populate({
-        path: 'user',
-        strictPopulate: false
-      }).exec();
+      const order = await Order.findById(id).populate('products.product user');
       return res.status(200).json({
         status: 'success',
         data: order

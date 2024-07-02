@@ -10,6 +10,19 @@ const port = 5000;
 const app = express();
 
 
+// const ns = [
+//   { rat: 5, id: 1 },
+//   { rat: 4, id: 2 },
+//   { rat: 5, id: 3 },
+//   { rat: 3, id: 4 },
+// ];
+
+
+// const total = ns.reduce((a, b) => a + b.rat, 0);
+
+// const avg = total/ ns.length;
+
+
 
 
 
