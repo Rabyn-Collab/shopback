@@ -66,7 +66,10 @@ export const getProductById = async (req, res) => {
   const { id } = req.params;
   try {
     if (mongoose.isValidObjectId(id)) {
-      const product = await Product.findById(id);
+      const product = await Product.findById(id).populate({
+        path: 'reviews.user',
+        select: 'username'
+      });
       return res.status(200).json({ status: 'success', data: product });
     }
     return res.status(400).json({
@@ -171,7 +174,7 @@ export const addReview = async (req, res) => {
   try {
     const isExist = await Product.findById(id);
     if (isExist) {
-      const review = isExist.reviews.find((rev) => rev.user === req.userId);
+      const review = isExist.reviews.find((rev) => rev.user.toString() === req.userId);
       if (review) return res.status(400).json({ status: 'error', message: `already reviewed` });
       isExist.reviews.push(
         {
