@@ -34,7 +34,10 @@ mongoose.connect('mongodb+srv://babynshrestha76:moles900@cluster0.guo1zjx.mongod
   })
 });
 
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: ['https://shopback-58dq.onrender.com', 'https://react-mongo-swart.vercel.app/'],
+}));
 app.use(morgan('dev'));
 app.use(fileUpload({
   limits: { fileSize: 5 * 1024 * 1024 },
