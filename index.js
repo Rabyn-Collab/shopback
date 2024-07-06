@@ -33,7 +33,13 @@ mongoose.connect('mongodb+srv://babynshrestha76:moles900@cluster0.guo1zjx.mongod
     console.log('connected server is running');
   })
 });
-
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  next();
+});
 app.use(cors({
   credentials: true,
   origin: "https://react-mongo-swart.vercel.app",
