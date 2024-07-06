@@ -36,7 +36,7 @@ mongoose.connect('mongodb+srv://babynshrestha76:moles900@cluster0.guo1zjx.mongod
 
 app.use(cors({
   credentials: true,
-  origin: ['https://shopback-58dq.onrender.com', 'https://react-mongo-swart.vercel.app/'],
+  origin: "https://react-mongo-swart.vercel.app",
 }));
 app.use(morgan('dev'));
 app.use(fileUpload({
