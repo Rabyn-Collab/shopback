@@ -47,10 +47,11 @@ export const getProducts = async (req, res) => {
     query = query.select('-createdAt -updatedAt -__v').skip(skip).limit(limit);
 
     const products = await query;
-
+    const total = await Product.countDocuments();
 
     return res.status(200).json({
       status: 'success',
+      total,
       length: products.length,
       data: products
     });
