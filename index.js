@@ -4,13 +4,15 @@ import productRoutes from './routes/productRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
+import { createServer } from 'http';
 import cors from 'cors';
 import fileUpload from 'express-fileupload';
-
+import { Server } from "socket.io";
 const port = 5000;
 const app = express();
 
-
+const server = createServer(app);
+const io = new Server(server, { cors: { origin: '*' } });
 // const ns = [
 //   { rat: 5, id: 1 },
 //   { rat: 4, id: 2 },
@@ -29,7 +31,7 @@ const app = express();
 
 mongoose.connect('mongodb+srv://babynshrestha76:moles900@cluster0.guo1zjx.mongodb.net/Shopy').then((val) => {
 
-  app.listen(port, () => {
+  server.listen(port, () => {
     console.log('connected server is running');
   })
 });
@@ -64,4 +66,9 @@ app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 
-
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('message', (data) => {
+    io.emit('message', `${socket.id}. ${data}`);
+  })
+});
